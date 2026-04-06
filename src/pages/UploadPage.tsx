@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, Image, Video, ArrowLeft, Check } from "lucide-react";
+import { Upload, Image, Video, ArrowLeft, Check, Camera } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -56,7 +56,9 @@ const UploadPage = () => {
 
         <div className="text-center mb-8 animate-fade-in-up">
           <span className="text-[11px] font-bold uppercase tracking-[2px] text-primary mb-2 block">Step 1 of 4</span>
-          <div className="text-4xl mb-3 animate-float">📸</div>
+          <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+            <Camera className="w-6 h-6 text-primary" />
+          </div>
           <h2 className="text-2xl md:text-[34px] font-extrabold mb-2">Upload Your Device</h2>
           <p className="text-subtle text-sm max-w-md mx-auto">Show us your device from multiple angles for the most accurate valuation.</p>
         </div>

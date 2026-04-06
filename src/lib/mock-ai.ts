@@ -61,7 +61,7 @@ export function simulateAIAnalysis(diag: DiagnosticsData): ScanResult {
 }
 
 export function generateListing(result: ScanResult): string {
-  return `📱 ${result.deviceName}
+  return `${result.deviceName}
 
 TITLE: ${result.brand} ${result.deviceName} - ${result.condition} Condition - Tested & Working
 
