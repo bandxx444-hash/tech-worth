@@ -69,7 +69,7 @@ const defaultDiagnostics: DiagnosticsData = {
 
 const ScanContext = createContext<ScanContextType | null>(null);
 
-export const useScan = () => {
+export const useScan = (): ScanContextType => {
   const ctx = useContext(ScanContext);
   if (!ctx) throw new Error("useScan must be used within ScanProvider");
   return ctx;
