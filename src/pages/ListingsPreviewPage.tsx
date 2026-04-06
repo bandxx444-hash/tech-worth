@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, Package } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -55,7 +55,7 @@ const ListingsPreviewPage = () => {
               <img src={listing.imageUrl} alt={listing.title} className="max-h-full object-contain" />
             ) : (
               <div className="text-center text-faintest text-sm">
-                <p className="text-3xl mb-2">📦</p>
+                <Package className="w-8 h-8 mx-auto mb-2 text-faintest" />
                 <p>No image available</p>
               </div>
             )}

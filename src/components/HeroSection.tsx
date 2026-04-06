@@ -59,7 +59,7 @@ const HeroSection = () => {
           Start Scanning →
         </button>
         <div className="text-left">
-          <p className="text-sm font-bold text-foreground mb-2">📂 Drop a photo or video — get your value instantly.</p>
+          <p className="text-sm font-bold text-foreground mb-2">Drop a photo or video — get your value instantly.</p>
           <div
             className="border-2 border-dashed border-primary/30 rounded-2xl bg-background h-[110px] flex items-center justify-center gap-2 text-subtle text-sm cursor-pointer hover:border-primary/50 transition-colors"
             onDragOver={e => e.preventDefault()}

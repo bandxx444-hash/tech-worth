@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, AlertTriangle, CheckCircle } from "lucide-react";
+import { ArrowLeft, AlertTriangle, CheckCircle, Cpu } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -51,7 +51,9 @@ const DiagnosticsPage = () => {
 
         <div className="text-center mb-6 animate-fade-in-up">
           <span className="text-[11px] font-bold uppercase tracking-[2px] text-primary mb-2 block">Step 2 of 4</span>
-          <div className="text-4xl mb-3 animate-float">🤖</div>
+          <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+            <Cpu className="w-6 h-6 text-primary" />
+          </div>
           <h2 className="text-2xl md:text-[34px] font-extrabold mb-2">Device Diagnostics</h2>
         </div>
 
@@ -66,7 +68,7 @@ const DiagnosticsPage = () => {
             <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <div className="text-sm">
               <span className="text-primary font-medium">AI filled in {confident.length} field(s) automatically.</span>{" "}
-              <span className="text-accent font-medium">⚠️ {uncertain.length} field(s) couldn't be determined — please complete them below.</span>
+              <span className="text-accent font-medium">{uncertain.length} field(s) couldn't be determined — please complete them below.</span>
             </div>
           </div>
         )}

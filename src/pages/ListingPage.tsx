@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Download, ExternalLink, RotateCcw } from "lucide-react";
+import { Download, ExternalLink, RotateCcw, DollarSign, Recycle, Leaf } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -83,7 +83,9 @@ const ListingPage = () => {
           {/* TRADE-IN */}
           {result.decision === "trade-in" && (
             <>
-              <div className="text-6xl mb-4">💰</div>
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <DollarSign className="w-8 h-8 text-primary" />
+              </div>
               <p className="text-sm text-subtle mb-1">Expected Value</p>
               <p className="text-4xl font-extrabold text-primary mb-8">${result.adjustedPrice} USD</p>
 
@@ -104,10 +106,13 @@ const ListingPage = () => {
           {/* RECYCLE */}
           {result.decision === "recycle" && (
             <>
-              <div className="text-6xl mb-4">♻️</div>
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <Recycle className="w-8 h-8 text-primary" />
+              </div>
               <div className="flex items-center justify-center gap-2 bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 mb-8">
+                <Leaf className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium text-primary">
-                  🌱 You're keeping {result.co2Saved} lbs of CO₂ out of landfills.
+                  You're keeping {result.co2Saved} lbs of CO₂ out of landfills.
                 </span>
               </div>
 

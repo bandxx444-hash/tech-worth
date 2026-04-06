@@ -1,3 +1,4 @@
+import { Leaf } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
@@ -15,9 +16,9 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm"
+          <div className="w-8 h-8 rounded-full flex items-center justify-center"
             style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
-            ♻️
+            <Leaf className="w-4 h-4" style={{ color: "white" }} />
           </div>
           <span className="text-[22px] font-extrabold" style={{ color: "white" }}>EcoLens</span>
         </Link>

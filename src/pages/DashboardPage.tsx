@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Trash2 } from "lucide-react";
+import { Trash2, DollarSign, Store, Recycle, Inbox } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import { useScan, type ScanResult } from "@/context/ScanContext";
@@ -11,10 +11,10 @@ const condBadge: Record<string, string> = {
   Poor: "bg-red-100 text-red-600",
 };
 
-const decisionIcon: Record<string, string> = {
-  sell: "💰",
-  "trade-in": "🏪",
-  recycle: "♻️",
+const decisionIcon: Record<string, React.ReactNode> = {
+  sell: <DollarSign className="w-5 h-5 text-primary" />,
+  "trade-in": <Store className="w-5 h-5 text-accent" />,
+  recycle: <Recycle className="w-5 h-5 text-primary" />,
 };
 
 const DashboardPage = () => {
@@ -33,7 +33,9 @@ const DashboardPage = () => {
 
         {scanHistory.length === 0 ? (
           <div className="text-center py-20 animate-fade-in-up">
-            <div className="text-6xl mb-4">📭</div>
+            <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center mx-auto mb-4">
+              <Inbox className="w-8 h-8 text-faintest" />
+            </div>
             <h2 className="text-xl font-bold mb-2">No scans yet</h2>
             <p className="text-subtle text-sm mb-6">Start scanning devices to see your history here.</p>
             <button
@@ -64,7 +66,9 @@ const DashboardPage = () => {
             <div className="space-y-3 mb-8">
               {scanHistory.map((r: ScanResult) => (
                 <div key={r.id} className="glass-card flex items-center gap-4">
-                  <span className="text-2xl">{decisionIcon[r.decision]}</span>
+                  <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0">
+                    {decisionIcon[r.decision]}
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-bold text-foreground text-sm truncate">{r.deviceName}</p>
                     <p className="text-xs text-subtle">{r.brand} · {new Date(r.scannedAt).toLocaleDateString()}</p>

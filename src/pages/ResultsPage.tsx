@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Sparkles, DollarSign, Store, Recycle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -13,10 +13,10 @@ const condBadgeClass: Record<string, string> = {
   Poor: "bg-red-100 text-red-600 border-red-200",
 };
 
-const decisionLabels: { value: Decision; icon: string; label: string }[] = [
-  { value: "sell", icon: "💰", label: "Sell it" },
-  { value: "trade-in", icon: "🏪", label: "Trade it in" },
-  { value: "recycle", icon: "♻️", label: "Recycle it" },
+const decisionLabels: { value: Decision; icon: React.ReactNode; label: string }[] = [
+  { value: "sell", icon: <DollarSign className="w-4 h-4" />, label: "Sell it" },
+  { value: "trade-in", icon: <Store className="w-4 h-4" />, label: "Trade it in" },
+  { value: "recycle", icon: <Recycle className="w-4 h-4" />, label: "Recycle it" },
 ];
 
 const ResultsPage = () => {
@@ -82,15 +82,15 @@ const ResultsPage = () => {
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => setDecision("ai")}
-              className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${decision === "ai" ? "border-primary bg-primary/10 text-primary" : "border-border text-subtle hover:border-primary/30"}`}
+              className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium border transition-all ${decision === "ai" ? "border-primary bg-primary/10 text-primary" : "border-border text-subtle hover:border-primary/30"}`}
             >
-              🤖 Keep AI recommendation
+              <Sparkles className="w-4 h-4" /> Keep AI pick
             </button>
             {decisionLabels.map(d => (
               <button
                 key={d.value}
                 onClick={() => setDecision(d.value)}
-                className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${decision === d.value ? "border-primary bg-primary/10 text-primary" : "border-border text-subtle hover:border-primary/30"}`}
+                className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium border transition-all ${decision === d.value ? "border-primary bg-primary/10 text-primary" : "border-border text-subtle hover:border-primary/30"}`}
               >
                 {d.icon} {d.label}
               </button>
