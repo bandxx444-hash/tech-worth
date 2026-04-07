@@ -76,10 +76,10 @@
   .text-shimmer {
     background: linear-gradient(
       90deg,
-      hsl(153 70% 48%) 0%,
-      hsl(43 85% 60%) 35%,
-      hsl(153 70% 48%) 70%,
-      hsl(43 85% 60%) 100%
+      hsl(153 70% 32%) 0%,
+      hsl(43 85% 45%) 35%,
+      hsl(153 70% 32%) 70%,
+      hsl(43 85% 45%) 100%
     );
     background-size: 300% auto;
     -webkit-background-clip: text;
@@ -90,12 +90,12 @@
 
   .glass-card {
     @apply rounded-2xl p-8 border shadow-card;
-    background: linear-gradient(145deg, hsl(220 18% 11%), hsl(220 18% 9%));
-    border-color: hsl(220 15% 20%);
+    background: hsl(0 0% 100%);
+    border-color: hsl(150 15% 85%);
     transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
   }
   .glass-card:hover {
-    border-color: hsl(153 70% 38% / 0.3);
+    border-color: hsl(153 70% 38% / 0.35);
     box-shadow: 0 8px 40px rgba(15, 138, 95, 0.08), 0 0 0 1px rgba(15, 138, 95, 0.05);
     transform: translateY(-1px);
   }
@@ -108,7 +108,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, hsl(153 70% 48%), hsl(43 75% 55%));
+    background: linear-gradient(135deg, hsl(153 70% 32%), hsl(43 75% 45%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
