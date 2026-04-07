@@ -64,7 +64,7 @@ const HeroSection = () => {
           <p className="text-sm font-semibold text-foreground mb-2 font-sans">Drop a photo or video to begin</p>
           <div
             className="border border-border rounded-2xl h-[100px] w-[280px] flex items-center justify-center gap-2 text-subtle text-sm cursor-pointer transition-all duration-300 hover:border-primary/40 hover:shadow-glow font-sans"
-            style={{ background: "linear-gradient(145deg, hsl(220 18% 11%), hsl(220 18% 9%))" }}
+            style={{ background: "hsl(40 30% 96%)" }}
             onDragOver={e => e.preventDefault()}
             onDrop={handleDrop}
             onClick={() => fileRef.current?.click()}

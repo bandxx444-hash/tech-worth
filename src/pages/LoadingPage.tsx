@@ -63,12 +63,12 @@ const LoadingPage = () => {
                   <stop offset="100%" stopColor="hsl(43 75% 55%)" />
                 </linearGradient>
               </defs>
-              <circle cx="88" cy="88" r="86" fill="none" stroke="hsl(220 15% 18%)" strokeWidth="1.5" />
+              <circle cx="88" cy="88" r="86" fill="none" stroke="hsl(150 15% 85%)" strokeWidth="1.5" />
               <circle cx="88" cy="88" r="86" fill="none" stroke="url(#arcGrad)" strokeWidth="2" strokeDasharray="100 440" strokeLinecap="round" />
             </svg>
             {/* Progress ring */}
             <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 176 176">
-              <circle cx="88" cy="88" r="74" fill="none" stroke="hsl(220 15% 15%)" strokeWidth="3" />
+              <circle cx="88" cy="88" r="74" fill="none" stroke="hsl(150 15% 88%)" strokeWidth="3" />
               <circle cx="88" cy="88" r="74" fill="none" stroke="url(#progressGrad2)" strokeWidth="3" strokeLinecap="round"
                 strokeDasharray={`${scanProgress * 4.65} 465`} className="transition-all duration-100 ease-linear" />
               <defs>
@@ -80,7 +80,7 @@ const LoadingPage = () => {
             </svg>
             {/* Center */}
             <div className="absolute inset-8 rounded-full flex items-center justify-center"
-              style={{ background: "linear-gradient(145deg, hsl(220 18% 12%), hsl(220 18% 9%))" }}>
+              style={{ background: "hsl(40 30% 96%)" }}>
               <div className="absolute inset-0 rounded-full animate-ping opacity-10" style={{ background: "hsl(153 70% 38%)", animationDuration: "2.5s" }} />
               <PhaseIcon className="w-8 h-8 text-primary relative z-10 transition-all duration-300" />
             </div>
@@ -93,7 +93,7 @@ const LoadingPage = () => {
           <div className="flex items-center justify-center gap-2 mb-10">
             {phases.map((_, i) => (
               <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i <= phase ? "w-8" : "w-3"}`}
-                style={{ background: i <= phase ? "linear-gradient(90deg, hsl(153 70% 38%), hsl(43 75% 50%))" : "hsl(220 15% 18%)" }} />
+                style={{ background: i <= phase ? "linear-gradient(90deg, hsl(153 70% 38%), hsl(43 75% 50%))" : "hsl(150 15% 85%)" }} />
             ))}
           </div>
 

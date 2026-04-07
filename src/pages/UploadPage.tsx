@@ -62,7 +62,7 @@ const UploadPage = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 rounded-xl p-1 mb-6 max-w-xs mx-auto" style={{ background: "hsl(220 15% 13%)" }}>
+        <div className="flex gap-1 rounded-xl p-1 mb-6 max-w-xs mx-auto" style={{ background: "hsl(150 15% 92%)" }}>
           {(["photos", "video"] as const).map(t => (
             <button
               key={t}
@@ -82,7 +82,7 @@ const UploadPage = () => {
           <div>
             <div
               className="border border-dashed border-border rounded-2xl p-8 text-center cursor-pointer hover:border-primary/40 transition-all duration-300"
-              style={{ background: "linear-gradient(145deg, hsl(220 18% 11%), hsl(220 18% 9%))" }}
+              style={{ background: "hsl(40 30% 96%)" }}
               onDragOver={e => e.preventDefault()} onDrop={handlePhotoDrop} onClick={() => fileRef.current?.click()}
             >
               <Upload className="w-8 h-8 text-primary mx-auto mb-3" />
@@ -104,7 +104,7 @@ const UploadPage = () => {
           <div>
             <div
               className="border border-dashed border-border rounded-2xl p-8 text-center cursor-pointer hover:border-primary/40 transition-all duration-300"
-              style={{ background: "linear-gradient(145deg, hsl(220 18% 11%), hsl(220 18% 9%))" }}
+              style={{ background: "hsl(40 30% 96%)" }}
               onClick={() => videoRef.current?.click()}
             >
               <Video className="w-8 h-8 text-primary mx-auto mb-3" />

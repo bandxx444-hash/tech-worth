@@ -73,10 +73,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        card: "0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03)",
-        cta: "0 4px 20px rgba(15,138,95,0.3), 0 0 60px rgba(15,138,95,0.1)",
-        nav: "0 4px 30px rgba(0,0,0,0.4)",
-        glow: "0 0 40px rgba(15,138,95,0.15)",
+        card: "0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03)",
+        cta: "0 4px 20px rgba(15,138,95,0.25), 0 0 60px rgba(15,138,95,0.08)",
+        nav: "0 4px 30px rgba(0,0,0,0.06)",
+        glow: "0 0 40px rgba(15,138,95,0.1)",
       },
       keyframes: {
         "accordion-down": {
