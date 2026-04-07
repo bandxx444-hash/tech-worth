@@ -8,10 +8,10 @@ import { useScan } from "@/context/ScanContext";
 import { simulateAIAnalysis, getRandomFact } from "@/lib/mock-ai";
 
 const phases = [
-  { icon: Search, label: "Searching marketplace listings...", duration: 1200 },
-  { icon: BarChart3, label: "Grading device condition...", duration: 1200 },
-  { icon: FileText, label: "Building your valuation...", duration: 1200 },
-  { icon: CheckCircle, label: "Finalizing results...", duration: 400 },
+  { icon: Search, label: "Searching marketplace listings..." },
+  { icon: BarChart3, label: "Grading device condition..." },
+  { icon: FileText, label: "Building your valuation..." },
+  { icon: CheckCircle, label: "Finalizing results..." },
 ];
 
 const LoadingPage = () => {
@@ -21,32 +21,24 @@ const LoadingPage = () => {
   const [phase, setPhase] = useState(0);
   const [scanProgress, setScanProgress] = useState(0);
 
-  // Phase progression
   useEffect(() => {
-    let elapsed = 0;
-    for (let i = 0; i < phase; i++) elapsed += phases[i].duration;
-    const next = phase < phases.length - 1
-      ? setTimeout(() => setPhase(p => p + 1), phases[phase].duration)
-      : undefined;
-    return () => clearTimeout(next);
+    const durations = [1200, 1200, 1200, 400];
+    if (phase < phases.length - 1) {
+      const t = setTimeout(() => setPhase(p => p + 1), durations[phase]);
+      return () => clearTimeout(t);
+    }
   }, [phase]);
 
-  // Smooth progress bar
   useEffect(() => {
     const interval = setInterval(() => {
-      setScanProgress(p => {
-        if (p >= 100) return 100;
-        return Math.min(p + 1.2, 100);
-      });
+      setScanProgress(p => Math.min(p + 1.2, 100));
     }, 40);
     return () => clearInterval(interval);
   }, []);
 
-  // Navigate when done
   useEffect(() => {
     const timer = setTimeout(() => {
-      const result = simulateAIAnalysis(diagnostics);
-      setResult(result);
+      setResult(simulateAIAnalysis(diagnostics));
       navigate("/listings-preview");
     }, 4200);
     return () => clearTimeout(timer);
@@ -58,79 +50,55 @@ const LoadingPage = () => {
     <div className="min-h-screen relative">
       <BackgroundOrbs />
       <Navbar />
-      <main className="container mx-auto px-4 max-w-lg relative z-10 pt-20 pb-20 text-center">
+      <main className="container mx-auto px-4 max-w-lg relative z-10 pt-20 pb-20 text-center font-sans">
         <ProgressBar percent={55} />
 
         <div className="mt-12 animate-fade-in-up">
-          {/* Animated scan visualization */}
-          <div className="relative w-40 h-40 mx-auto mb-8">
-            {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-primary/20" />
-            {/* Spinning arc */}
-            <svg className="absolute inset-0 w-full h-full animate-spin" style={{ animationDuration: "3s" }} viewBox="0 0 160 160">
-              <circle
-                cx="80" cy="80" r="78"
-                fill="none"
-                stroke="hsl(153 80% 30%)"
-                strokeWidth="2"
-                strokeDasharray="120 380"
-                strokeLinecap="round"
-              />
-            </svg>
-            {/* Inner pulsing circle */}
-            <div className="absolute inset-6 rounded-full bg-primary/5 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-primary/5 animate-ping" style={{ animationDuration: "2s" }} />
-              <PhaseIcon className="w-10 h-10 text-primary relative z-10 transition-all duration-300" />
-            </div>
-            {/* Progress ring */}
-            <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 160 160">
-              <circle
-                cx="80" cy="80" r="70"
-                fill="none"
-                stroke="hsl(153 80% 30% / 0.15)"
-                strokeWidth="4"
-              />
-              <circle
-                cx="80" cy="80" r="70"
-                fill="none"
-                stroke="url(#progressGrad)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeDasharray={`${scanProgress * 4.4} 440`}
-                className="transition-all duration-100 ease-linear"
-              />
+          {/* Scan visualization */}
+          <div className="relative w-44 h-44 mx-auto mb-10">
+            <svg className="absolute inset-0 w-full h-full animate-spin" style={{ animationDuration: "4s" }} viewBox="0 0 176 176">
               <defs>
-                <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#0F8A5F" />
-                  <stop offset="100%" stopColor="#C9A227" />
+                <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(153 70% 48%)" />
+                  <stop offset="100%" stopColor="hsl(43 75% 55%)" />
+                </linearGradient>
+              </defs>
+              <circle cx="88" cy="88" r="86" fill="none" stroke="hsl(220 15% 18%)" strokeWidth="1.5" />
+              <circle cx="88" cy="88" r="86" fill="none" stroke="url(#arcGrad)" strokeWidth="2" strokeDasharray="100 440" strokeLinecap="round" />
+            </svg>
+            {/* Progress ring */}
+            <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 176 176">
+              <circle cx="88" cy="88" r="74" fill="none" stroke="hsl(220 15% 15%)" strokeWidth="3" />
+              <circle cx="88" cy="88" r="74" fill="none" stroke="url(#progressGrad2)" strokeWidth="3" strokeLinecap="round"
+                strokeDasharray={`${scanProgress * 4.65} 465`} className="transition-all duration-100 ease-linear" />
+              <defs>
+                <linearGradient id="progressGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(153 70% 38%)" />
+                  <stop offset="100%" stopColor="hsl(43 75% 50%)" />
                 </linearGradient>
               </defs>
             </svg>
+            {/* Center */}
+            <div className="absolute inset-8 rounded-full flex items-center justify-center"
+              style={{ background: "linear-gradient(145deg, hsl(220 18% 12%), hsl(220 18% 9%))" }}>
+              <div className="absolute inset-0 rounded-full animate-ping opacity-10" style={{ background: "hsl(153 70% 38%)", animationDuration: "2.5s" }} />
+              <PhaseIcon className="w-8 h-8 text-primary relative z-10 transition-all duration-300" />
+            </div>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-extrabold mb-2">Analyzing Marketplace</h2>
-          
-          {/* Phase indicator */}
-          <p className="text-sm text-primary font-medium mb-1 h-5 transition-all duration-300">
-            {phases[phase].label}
-          </p>
+          <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">Analyzing Marketplace</h2>
+          <p className="text-sm text-primary font-medium mb-1 h-5">{phases[phase].label}</p>
           <p className="text-xs text-faintest mb-8">{Math.round(scanProgress)}% complete</p>
 
-          {/* Phase steps */}
           <div className="flex items-center justify-center gap-2 mb-10">
             {phases.map((_, i) => (
-              <div
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
-                  i <= phase ? "w-8 bg-primary" : "w-4 bg-secondary"
-                }`}
-              />
+              <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i <= phase ? "w-8" : "w-3"}`}
+                style={{ background: i <= phase ? "linear-gradient(90deg, hsl(153 70% 38%), hsl(43 75% 50%))" : "hsl(220 15% 18%)" }} />
             ))}
           </div>
 
-          {/* Fact card */}
           <div className="glass-card text-left">
-            <span className="text-[11px] font-bold uppercase tracking-[2px] text-primary mb-2 block">Did you know?</span>
+            <span className="text-[11px] font-bold uppercase tracking-[2px] gradient-text mb-2 block">Did you know?</span>
             <p className="text-sm text-body leading-relaxed">{fact}</p>
           </div>
         </div>

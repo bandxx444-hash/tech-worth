@@ -22,13 +22,9 @@ const recycleLinks = [
 const ListingPage = () => {
   const navigate = useNavigate();
   const { result, addToHistory, resetScan } = useScan();
-
   const listing = useMemo(() => result ? generateListing(result) : "", [result]);
 
-  useEffect(() => {
-    if (result) addToHistory(result);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(() => { if (result) addToHistory(result); }, []); // eslint-disable-line
 
   if (!result) { navigate("/"); return null; }
 
@@ -36,62 +32,53 @@ const ListingPage = () => {
     const blob = new Blob([listing], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url;
-    a.download = `ecolens-listing-${result.id.slice(0, 8)}.txt`;
-    a.click();
+    a.href = url; a.download = `ecolens-listing-${result.id.slice(0, 8)}.txt`; a.click();
     URL.revokeObjectURL(url);
   };
 
-  const handleScanAnother = () => {
-    resetScan();
-    navigate("/upload");
-  };
+  const handleScanAnother = () => { resetScan(); navigate("/upload"); };
 
   return (
     <div className="min-h-screen relative">
       <BackgroundOrbs />
       <Navbar />
-      <main className="container mx-auto px-4 max-w-2xl relative z-10 pt-8 pb-20">
+      <main className="container mx-auto px-4 max-w-2xl relative z-10 pt-8 pb-20 font-sans">
         <ProgressBar percent={100} />
-
         <div className="text-center mt-8 mb-8 animate-fade-in-up">
-          <span className="text-[11px] font-bold uppercase tracking-[2px] text-primary mb-2 block">Step 4 of 4</span>
+          <span className="text-[11px] font-bold uppercase tracking-[2px] gradient-text mb-3 block">Step 4 of 4 — Complete</span>
 
-          {/* SELL */}
           {result.decision === "sell" && (
             <>
-              <h1 className="text-2xl md:text-3xl font-extrabold mb-6">Your Ready-to-Post Listing</h1>
-
+              <h1 className="text-2xl md:text-3xl font-display font-bold mb-6">Your Ready-to-Post Listing</h1>
               <div className="glass-card text-left mb-4">
-                <pre className="whitespace-pre-wrap text-sm font-mono text-foreground leading-relaxed bg-background border border-border rounded-xl p-5">
+                <pre className="whitespace-pre-wrap text-sm font-mono text-foreground/80 leading-relaxed rounded-xl p-5 border border-border"
+                  style={{ background: "hsl(220 18% 8%)" }}>
                   {listing}
                 </pre>
               </div>
-
               <div className="flex gap-3 mb-6">
-                <button onClick={downloadListing} className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm border border-border bg-card hover:bg-secondary transition-colors">
+                <button onClick={downloadListing} className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm border border-border bg-card text-foreground hover:bg-secondary transition-colors">
                   <Download className="w-4 h-4" /> Download .txt
                 </button>
                 <a href={`https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(result.deviceName)}`} target="_blank" rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm border border-border bg-card hover:bg-secondary transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm border border-border bg-card text-foreground hover:bg-secondary transition-colors">
                   <ExternalLink className="w-4 h-4" /> Search on eBay
                 </a>
               </div>
             </>
           )}
 
-          {/* TRADE-IN */}
           {result.decision === "trade-in" && (
             <>
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 gradient-border"
+                style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.1), hsl(43 75% 50% / 0.05))" }}>
                 <DollarSign className="w-8 h-8 text-primary" />
               </div>
               <p className="text-sm text-subtle mb-1">Expected Value</p>
-              <p className="text-4xl font-extrabold text-primary mb-8">${result.adjustedPrice} USD</p>
-
+              <p className="text-4xl font-display font-bold gradient-text mb-8">${result.adjustedPrice} USD</p>
               <div className="space-y-3 text-left mb-6">
                 {tradeInLinks.map(l => (
-                  <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer" className="glass-card flex items-center gap-4 hover:border-primary/30 transition-colors group">
+                  <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer" className="glass-card flex items-center gap-4 group">
                     <div className="flex-1">
                       <p className="font-bold text-foreground text-sm group-hover:text-primary transition-colors">{l.name}</p>
                       <p className="text-xs text-subtle">{l.desc}</p>
@@ -103,22 +90,20 @@ const ListingPage = () => {
             </>
           )}
 
-          {/* RECYCLE */}
           {result.decision === "recycle" && (
             <>
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 gradient-border"
+                style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.1), hsl(43 75% 50% / 0.05))" }}>
                 <Recycle className="w-8 h-8 text-primary" />
               </div>
-              <div className="flex items-center justify-center gap-2 bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 mb-8">
+              <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 mb-8 gradient-border"
+                style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.08), transparent)" }}>
                 <Leaf className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-primary">
-                  You're keeping {result.co2Saved} lbs of CO₂ out of landfills.
-                </span>
+                <span className="text-sm font-medium text-primary">You're keeping {result.co2Saved} lbs of CO₂ out of landfills.</span>
               </div>
-
               <div className="space-y-3 text-left mb-6">
                 {recycleLinks.map(l => (
-                  <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer" className="glass-card flex items-center gap-4 hover:border-primary/30 transition-colors group">
+                  <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer" className="glass-card flex items-center gap-4 group">
                     <div className="flex-1">
                       <p className="font-bold text-foreground text-sm group-hover:text-primary transition-colors">{l.name}</p>
                       <p className="text-xs text-subtle">{l.desc}</p>
@@ -130,18 +115,15 @@ const ListingPage = () => {
             </>
           )}
 
-          {/* CO2 callout */}
           <div className="glass-card text-center mb-6">
             <p className="text-xs text-subtle mb-1">Environmental Impact</p>
-            <p className="text-2xl font-extrabold text-primary">{result.co2Saved} lbs</p>
+            <p className="text-2xl font-display font-bold gradient-text">{result.co2Saved} lbs</p>
             <p className="text-xs text-subtle">CO₂ kept out of landfills</p>
           </div>
 
-          <button
-            onClick={handleScanAnother}
-            className="w-full py-3.5 rounded-xl font-bold text-[15px] text-primary-foreground shadow-cta transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
-            style={{ background: "linear-gradient(135deg, #0F8A5F, #0a6b49)" }}
-          >
+          <button onClick={handleScanAnother}
+            className="w-full py-3.5 rounded-xl font-bold text-[15px] text-primary-foreground shadow-cta transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            style={{ background: "linear-gradient(135deg, hsl(153 70% 38%), hsl(153 70% 28%))" }}>
             <RotateCcw className="w-4 h-4" /> Scan Another Device →
           </button>
         </div>
