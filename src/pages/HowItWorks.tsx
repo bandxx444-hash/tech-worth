@@ -54,7 +54,7 @@ const HowItWorks = () => {
                 <span className="text-[11px] font-bold uppercase tracking-[2px] gradient-text mb-2 block">{s.step}</span>
                 <h3 className="text-xl font-display font-bold mb-2">{s.title}</h3>
                 <p className="text-body text-sm leading-relaxed mb-4">{s.desc}</p>
-                <div className="rounded-xl px-4 py-3 text-xs text-subtle border border-border" style={{ background: "hsl(220 18% 8%)" }}>
+                <div className="rounded-xl px-4 py-3 text-xs text-subtle border border-border" style={{ background: "hsl(40 30% 96%)" }}>
                   {s.info}
                 </div>
               </div>

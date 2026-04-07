@@ -52,7 +52,7 @@ const ListingPage = () => {
               <h1 className="text-2xl md:text-3xl font-display font-bold mb-6">Your Ready-to-Post Listing</h1>
               <div className="glass-card text-left mb-4">
                 <pre className="whitespace-pre-wrap text-sm font-mono text-foreground/80 leading-relaxed rounded-xl p-5 border border-border"
-                  style={{ background: "hsl(220 18% 8%)" }}>
+                  style={{ background: "hsl(40 30% 96%)" }}>
                   {listing}
                 </pre>
               </div>

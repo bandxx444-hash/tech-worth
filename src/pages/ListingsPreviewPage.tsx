@@ -42,7 +42,7 @@ const ListingsPreviewPage = () => {
             <span className="text-xs text-subtle">{idx + 1} / {total}</span>
           </div>
           <div className="rounded-xl border border-border h-48 flex items-center justify-center mb-4 relative"
-            style={{ background: "hsl(220 18% 8%)" }}>
+            style={{ background: "hsl(40 30% 96%)" }}>
             {listing.imageUrl ? (
               <img src={listing.imageUrl} alt={listing.title} className="max-h-full object-contain" />
             ) : (
@@ -60,7 +60,7 @@ const ListingsPreviewPage = () => {
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="border border-border rounded-xl p-4 space-y-2" style={{ background: "hsl(220 18% 8%)" }}>
+          <div className="border border-border rounded-xl p-4 space-y-2" style={{ background: "hsl(40 30% 96%)" }}>
             <p className="text-sm font-semibold text-foreground">{listing.title}</p>
             <div className="flex items-center gap-3 text-sm">
               <span className="font-bold gradient-text text-lg">${listing.soldPrice}</span>
