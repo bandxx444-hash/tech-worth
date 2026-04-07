@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 h-[68px] shadow-nav flex items-center px-6 backdrop-blur-xl"
-      style={{ background: "linear-gradient(90deg, hsl(220 20% 8% / 0.95), hsl(220 18% 10% / 0.95))", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      style={{ background: "linear-gradient(90deg, hsl(0 0% 100% / 0.95), hsl(40 30% 97% / 0.95))", borderBottom: "1px solid hsl(150 15% 85%)" }}>
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5">
