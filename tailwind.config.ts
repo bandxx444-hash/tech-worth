@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
+        sans: ["DM Sans", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -72,9 +73,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        card: "0 2px 16px rgba(15,138,95,0.06)",
-        cta: "0 4px 18px rgba(15,138,95,0.25)",
-        nav: "0 2px 20px rgba(15,138,95,0.35)",
+        card: "0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03)",
+        cta: "0 4px 20px rgba(15,138,95,0.3), 0 0 60px rgba(15,138,95,0.1)",
+        nav: "0 4px 30px rgba(0,0,0,0.4)",
+        glow: "0 0 40px rgba(15,138,95,0.15)",
       },
       keyframes: {
         "accordion-down": {

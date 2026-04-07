@@ -3,12 +3,12 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ percent }: ProgressBarProps) => (
-  <div className="w-full h-[3px] bg-secondary rounded-full overflow-hidden">
+  <div className="w-full h-[2px] rounded-full overflow-hidden" style={{ background: "hsl(220 15% 15%)" }}>
     <div
       className="h-full rounded-full transition-all duration-700 ease-out"
       style={{
         width: `${percent}%`,
-        background: "linear-gradient(90deg, #0F8A5F, #C9A227)",
+        background: "linear-gradient(90deg, hsl(153 70% 38%), hsl(43 75% 50%))",
       }}
     />
   </div>
