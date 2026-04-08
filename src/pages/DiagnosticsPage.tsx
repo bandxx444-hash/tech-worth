@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertTriangle, CheckCircle, Cpu } from "lucide-react";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -26,7 +27,7 @@ const DiagnosticsPage = () => {
 
   const isUncertain = (key: string) => form.aiConfidence[key] === false;
 
-  const inputCls = "w-full border border-border rounded-xl px-4 py-2.5 text-sm bg-card text-foreground placeholder:text-faintest focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans";
+  const inputCls = "w-full border border-border rounded-xl px-4 py-2.5 text-sm bg-card text-foreground placeholder:text-faintest focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200 font-sans";
 
   return (
     <div className="min-h-screen relative">
@@ -39,33 +40,49 @@ const DiagnosticsPage = () => {
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
 
-        <div className="text-center mb-6 animate-fade-in-up">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-6"
+        >
           <span className="text-[11px] font-bold uppercase tracking-[2px] text-primary mb-3 block">Step 2 of 4</span>
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 gradient-border"
             style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.1), hsl(43 75% 50% / 0.05))" }}>
             <Cpu className="w-6 h-6 text-primary" />
           </div>
           <h2 className="text-2xl md:text-[36px] font-display font-bold mb-2">Device Diagnostics</h2>
-        </div>
+        </motion.div>
 
-        {allConfident ? (
-          <div className="flex items-center gap-2 rounded-xl px-4 py-3 mb-6 animate-fade-in-up gradient-border"
-            style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.08), transparent)" }}>
-            <CheckCircle className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">AI identified all fields from your media</span>
-          </div>
-        ) : (
-          <div className="flex items-start gap-2 rounded-xl px-4 py-3 mb-6 animate-fade-in-up gradient-border"
-            style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.06), hsl(43 75% 50% / 0.04))" }}>
-            <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-            <div className="text-sm">
-              <span className="text-primary font-medium">AI filled in {confident.length} field(s) automatically.</span>{" "}
-              <span className="text-accent font-medium">{uncertain.length} field(s) couldn't be determined — please complete them below.</span>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          {allConfident ? (
+            <div className="flex items-center gap-2 rounded-xl px-4 py-3 mb-6 gradient-border"
+              style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.08), transparent)" }}>
+              <CheckCircle className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">AI identified all fields from your media</span>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="flex items-start gap-2 rounded-xl px-4 py-3 mb-6 gradient-border"
+              style={{ background: "linear-gradient(135deg, hsl(153 70% 38% / 0.06), hsl(43 75% 50% / 0.04))" }}>
+              <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+              <div className="text-sm">
+                <span className="text-primary font-medium">AI filled in {confident.length} field(s) automatically.</span>{" "}
+                <span className="text-accent font-medium">{uncertain.length} field(s) couldn't be determined — please complete them below.</span>
+              </div>
+            </div>
+          )}
+        </motion.div>
 
-        <div className="glass-card animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="glass-card"
+        >
           <div className="space-y-5">
             {(["productName", "brand", "modelNumber", "yearOfPurchase"] as const).map(key => (
               <div key={key}>
@@ -92,7 +109,7 @@ const DiagnosticsPage = () => {
               <div className="flex gap-3">
                 {[true, false].map(val => (
                   <button key={String(val)} onClick={() => update("powersOn", val)}
-                    className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all ${
+                    className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all duration-200 ${
                       form.powersOn === val ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-subtle hover:border-primary/30"
                     }`}>
                     {val ? "Yes" : "No"}
@@ -117,11 +134,10 @@ const DiagnosticsPage = () => {
           </div>
 
           <button onClick={handleSubmit}
-            className="w-full mt-8 py-3.5 rounded-xl font-bold text-[15px] text-primary-foreground shadow-cta transition-all duration-300 hover:-translate-y-0.5"
-            style={{ background: "linear-gradient(135deg, hsl(153 70% 38%), hsl(153 70% 28%))" }}>
-            Run AI Analysis →
+            className="w-full mt-8 py-3.5 rounded-xl font-bold text-[15px] text-primary-foreground shadow-cta transition-all duration-300 hover:-translate-y-0.5 gradient-btn relative overflow-hidden">
+            <span className="relative z-10">Run AI Analysis →</span>
           </button>
-        </div>
+        </motion.div>
       </main>
     </div>
   );

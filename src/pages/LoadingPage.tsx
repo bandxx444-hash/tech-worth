@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, BarChart3, FileText, CheckCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import BackgroundOrbs from "@/components/BackgroundOrbs";
 import ProgressBar from "@/components/ProgressBar";
@@ -8,10 +9,10 @@ import { useScan } from "@/context/ScanContext";
 import { simulateAIAnalysis, getRandomFact } from "@/lib/mock-ai";
 
 const phases = [
-  { icon: Search, label: "Searching marketplace listings..." },
-  { icon: BarChart3, label: "Grading device condition..." },
-  { icon: FileText, label: "Building your valuation..." },
-  { icon: CheckCircle, label: "Finalizing results..." },
+  { icon: Search, label: "Searching marketplace listings...", color: "hsl(153 70% 38%)" },
+  { icon: BarChart3, label: "Grading device condition...", color: "hsl(153 60% 45%)" },
+  { icon: FileText, label: "Building your valuation...", color: "hsl(43 75% 50%)" },
+  { icon: CheckCircle, label: "Finalizing results...", color: "hsl(153 70% 32%)" },
 ];
 
 const LoadingPage = () => {
@@ -53,55 +54,116 @@ const LoadingPage = () => {
       <main className="container mx-auto px-4 max-w-lg relative z-10 pt-20 pb-20 text-center font-sans">
         <ProgressBar percent={55} />
 
-        <div className="mt-12 animate-fade-in-up">
-          {/* Scan visualization */}
-          <div className="relative w-44 h-44 mx-auto mb-10">
-            <svg className="absolute inset-0 w-full h-full animate-spin" style={{ animationDuration: "4s" }} viewBox="0 0 176 176">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mt-12"
+        >
+          {/* Orbital scan visualization */}
+          <div className="relative w-52 h-52 mx-auto mb-12">
+            {/* Outer orbiting ring */}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 208 208" style={{ animation: "orbitSpin 6s linear infinite" }}>
               <defs>
-                <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="hsl(153 70% 48%)" />
-                  <stop offset="100%" stopColor="hsl(43 75% 55%)" />
+                <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(153 70% 48%)" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="hsl(43 75% 55%)" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="hsl(153 70% 48%)" stopOpacity="0" />
                 </linearGradient>
               </defs>
-              <circle cx="88" cy="88" r="86" fill="none" stroke="hsl(150 15% 85%)" strokeWidth="1.5" />
-              <circle cx="88" cy="88" r="86" fill="none" stroke="url(#arcGrad)" strokeWidth="2" strokeDasharray="100 440" strokeLinecap="round" />
+              <circle cx="104" cy="104" r="100" fill="none" stroke="hsl(150 15% 88%)" strokeWidth="1" />
+              <circle cx="104" cy="104" r="100" fill="none" stroke="url(#orbitGrad)" strokeWidth="2" strokeDasharray="80 548" strokeLinecap="round" />
+              {/* Orbiting dot */}
+              <circle cx="104" cy="4" r="4" fill="hsl(153 70% 48%)">
+                <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+              </circle>
             </svg>
+
+            {/* Second orbit - counter-rotating */}
+            <svg className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)]" viewBox="0 0 192 192" style={{ animation: "orbitSpin 8s linear infinite reverse" }}>
+              <circle cx="96" cy="96" r="90" fill="none" stroke="hsl(43 75% 50% / 0.15)" strokeWidth="1" strokeDasharray="4 8" />
+              <circle cx="96" cy="6" r="3" fill="hsl(43 75% 50% / 0.6)">
+                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite" />
+              </circle>
+            </svg>
+
             {/* Progress ring */}
-            <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 176 176">
-              <circle cx="88" cy="88" r="74" fill="none" stroke="hsl(150 15% 88%)" strokeWidth="3" />
-              <circle cx="88" cy="88" r="74" fill="none" stroke="url(#progressGrad2)" strokeWidth="3" strokeLinecap="round"
-                strokeDasharray={`${scanProgress * 4.65} 465`} className="transition-all duration-100 ease-linear" />
+            <svg className="absolute inset-5 w-[calc(100%-40px)] h-[calc(100%-40px)] -rotate-90" viewBox="0 0 168 168">
+              <circle cx="84" cy="84" r="78" fill="none" stroke="hsl(150 15% 90%)" strokeWidth="3" />
+              <circle cx="84" cy="84" r="78" fill="none" stroke="url(#loadProgressGrad)" strokeWidth="4" strokeLinecap="round"
+                strokeDasharray={`${scanProgress * 4.9} 490`} className="transition-all duration-100 ease-linear" />
               <defs>
-                <linearGradient id="progressGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="loadProgressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="hsl(153 70% 38%)" />
                   <stop offset="100%" stopColor="hsl(43 75% 50%)" />
                 </linearGradient>
               </defs>
             </svg>
-            {/* Center */}
-            <div className="absolute inset-8 rounded-full flex items-center justify-center"
-              style={{ background: "hsl(40 30% 96%)" }}>
-              <div className="absolute inset-0 rounded-full animate-ping opacity-10" style={{ background: "hsl(153 70% 38%)", animationDuration: "2.5s" }} />
-              <PhaseIcon className="w-8 h-8 text-primary relative z-10 transition-all duration-300" />
+
+            {/* Center content */}
+            <div className="absolute inset-10 rounded-full flex flex-col items-center justify-center"
+              style={{ background: "hsl(40 30% 97%)" }}>
+              <div className="absolute inset-0 rounded-full animate-ping opacity-[0.06]" style={{ background: "hsl(153 70% 38%)", animationDuration: "2.5s" }} />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={phase}
+                  initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, rotate: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative z-10"
+                >
+                  <PhaseIcon className="w-9 h-9 text-primary" />
+                </motion.div>
+              </AnimatePresence>
+              <span className="text-xs font-bold text-primary mt-1 relative z-10">{Math.round(scanProgress)}%</span>
             </div>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-2">Analyzing Marketplace</h2>
-          <p className="text-sm text-primary font-medium mb-1 h-5">{phases[phase].label}</p>
-          <p className="text-xs text-faintest mb-8">{Math.round(scanProgress)}% complete</p>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-2xl md:text-3xl font-display font-bold mb-3"
+          >
+            Analyzing Marketplace
+          </motion.h2>
 
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={phase}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="text-sm text-primary font-medium mb-8 h-5"
+            >
+              {phases[phase].label}
+            </motion.p>
+          </AnimatePresence>
+
+          {/* Phase indicators */}
           <div className="flex items-center justify-center gap-2 mb-10">
             {phases.map((_, i) => (
-              <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i <= phase ? "w-8" : "w-3"}`}
-                style={{ background: i <= phase ? "linear-gradient(90deg, hsl(153 70% 38%), hsl(43 75% 50%))" : "hsl(150 15% 85%)" }} />
+              <motion.div
+                key={i}
+                animate={{ width: i <= phase ? 32 : 12 }}
+                className="h-1.5 rounded-full"
+                style={{ background: i <= phase ? "linear-gradient(90deg, hsl(153 70% 38%), hsl(43 75% 50%))" : "hsl(150 15% 85%)" }}
+              />
             ))}
           </div>
 
-          <div className="glass-card text-left">
+          {/* Did you know card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="glass-card-glow text-left"
+          >
             <span className="text-[11px] font-bold uppercase tracking-[2px] gradient-text mb-2 block">Did you know?</span>
             <p className="text-sm text-body leading-relaxed">{fact}</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </main>
     </div>
   );
