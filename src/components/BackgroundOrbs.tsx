@@ -41,36 +41,45 @@ const BackgroundOrbs = () => (
     {/* Top gradient line */}
     <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(153 70% 38% / 0.25), hsl(43 75% 50% / 0.2), transparent)" }} />
 
-    {/* Floating particles */}
-    {[...Array(10)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute rounded-full"
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: [0, 0.6, 0],
-          y: [0, -80 - i * 10],
-          x: [0, (i % 2 === 0 ? 1 : -1) * 20],
-        }}
-        transition={{
-          duration: 5 + i * 0.8,
-          repeat: Infinity,
-          delay: i * 0.7,
-          ease: "easeOut",
-        }}
-        style={{
-          left: `${8 + i * 9}%`,
-          top: `${30 + (i % 4) * 15}%`,
-          width: `${3 + (i % 3) * 2}px`,
-          height: `${3 + (i % 3) * 2}px`,
-          background: i % 3 === 0
-            ? "hsl(153 70% 48%)"
-            : i % 3 === 1
-            ? "hsl(43 75% 55%)"
-            : "hsl(153 50% 60%)",
-        }}
-      />
-    ))}
+    {/* Rising dots — continuous upward drift */}
+    {[...Array(28)].map((_, i) => {
+      const size = 2 + (i % 4) * 1.5;
+      const duration = 6 + (i % 5) * 2.5;
+      const left = 3 + ((i * 17) % 94);
+      const delay = (i * 0.43) % duration;
+      const colors = [
+        "hsl(153 70% 48%)",
+        "hsl(43 75% 55%)",
+        "hsl(153 50% 60%)",
+        "hsl(43 60% 50%)",
+      ];
+      return (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          initial={{ opacity: 0, y: 0 }}
+          animate={{
+            opacity: [0, 0.7, 0.5, 0],
+            y: [0, -200, -500, -800],
+            x: [0, (i % 2 === 0 ? 1 : -1) * (8 + (i % 3) * 6), 0],
+          }}
+          transition={{
+            duration,
+            repeat: Infinity,
+            delay,
+            ease: "linear",
+          }}
+          style={{
+            left: `${left}%`,
+            bottom: `-${10 + (i % 3) * 5}px`,
+            width: `${size}px`,
+            height: `${size}px`,
+            background: colors[i % 4],
+            boxShadow: `0 0 ${size * 2}px ${colors[i % 4].replace(")", " / 0.4)")}`,
+          }}
+        />
+      );
+    })}
 
     {/* Decorative corner accents */}
     <svg className="absolute top-8 left-8 w-20 h-20 opacity-[0.06]" viewBox="0 0 80 80">
