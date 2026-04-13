@@ -1,6 +1,6 @@
 import { useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, ArrowRight, Sparkles } from "lucide-react";
+import { Upload, ArrowRight, Sparkles, Camera, Cpu, ShoppingBag, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScan } from "@/context/ScanContext";
 import { simulateAIDiagnostics } from "@/lib/mock-ai";
@@ -29,6 +29,12 @@ const HeroSection = () => {
     }
   }, [setFiles, setDiagnostics, navigate]);
 
+  const steps = [
+    { n: "01", icon: Camera, title: "Upload Media", sub: "Photo or video" },
+    { n: "02", icon: Cpu, title: "AI Analysis", sub: "Instant detection" },
+    { n: "03", icon: ShoppingBag, title: "Get Your Listing", sub: "Sell or recycle" },
+  ];
+
   return (
     <section className="relative z-10 pt-20 pb-16">
       <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -44,7 +50,7 @@ const HeroSection = () => {
           >
             <Sparkles className="w-3.5 h-3.5 text-primary" />
             <span className="text-xs font-medium font-sans text-subtle tracking-wide">
-              AI-Powered · Real-Time Pricing · Free
+              AI-Powered  ·  Real-Time Pricing  ·  Free
             </span>
           </motion.div>
 
@@ -53,7 +59,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-[58px] font-bold leading-[1.08] mb-6 tracking-tight"
+            className="text-4xl md:text-[62px] font-bold leading-[1.05] mb-6 tracking-tight"
           >
             E-Waste Value
             <br />
@@ -105,7 +111,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Right column - Hero image with layered effects */}
+        {/* Right column - Hero image with scan line effect */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, x: 40 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -113,7 +119,7 @@ const HeroSection = () => {
           className="relative flex justify-center"
         >
           <div className="relative">
-            {/* Decorative rings behind image */}
+            {/* Decorative rings */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -127,13 +133,34 @@ const HeroSection = () => {
               style={{ borderColor: "hsl(var(--accent))" }}
             />
 
-            <img
-              src={heroDevice}
-              alt="AI scanning a smartphone to determine its market value"
-              width={1024}
-              height={1024}
-              className="w-full max-w-[420px] animate-float relative z-10"
-            />
+            {/* Hero image with scan line overlay */}
+            <div className="relative overflow-hidden rounded-3xl">
+              <img
+                src={heroDevice}
+                alt="AI scanning a smartphone to determine its market value"
+                width={1024}
+                height={1024}
+                className="w-full max-w-[420px] animate-float relative z-10"
+              />
+              {/* Animated scan line */}
+              <div
+                className="absolute left-0 right-0 h-[2px] z-20 pointer-events-none"
+                style={{
+                  background: "linear-gradient(90deg, transparent, hsl(153 70% 48% / 0.9), hsl(43 75% 55% / 0.7), transparent)",
+                  boxShadow: "0 0 20px 4px hsl(153 70% 48% / 0.3), 0 0 60px 8px hsl(153 70% 48% / 0.1)",
+                  animation: "scanLine 3s ease-in-out infinite alternate",
+                }}
+              />
+              {/* Scan line glow area */}
+              <div
+                className="absolute left-0 right-0 h-16 z-[15] pointer-events-none opacity-30"
+                style={{
+                  background: "linear-gradient(180deg, transparent, hsl(153 70% 48% / 0.15), transparent)",
+                  animation: "scanLine 3s ease-in-out infinite alternate",
+                }}
+              />
+            </div>
+
             {/* Glow behind image */}
             <div className="absolute inset-0 -z-10 blur-3xl opacity-25"
               style={{ background: "radial-gradient(circle, hsl(var(--primary)), hsl(var(--accent)), transparent)" }}
@@ -142,31 +169,54 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* 3-step explainer */}
+      {/* 3-step explainer — upgraded cards */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="glass-card-glow inline-flex flex-wrap items-center justify-center gap-8 md:gap-12 text-sm font-sans mt-8 w-full"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12"
       >
-        {[
-          { n: "01", title: "Upload Media", sub: "Photo or video" },
-          { n: "02", title: "AI Analysis", sub: "Instant detection" },
-          { n: "03", title: "Get Your Listing", sub: "Sell or recycle" },
-        ].map((step, i) => (
-          <motion.div
-            key={i}
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-3 cursor-default"
-          >
-            <span className="text-2xl font-display font-bold gradient-text">{step.n}</span>
-            <div className="text-left">
-              <div className="font-semibold text-foreground">{step.title}</div>
-              <div className="text-xs text-subtle">{step.sub}</div>
-            </div>
-            {i < 2 && <span className="text-faintest ml-3 hidden md:inline">→</span>}
-          </motion.div>
-        ))}
+        {steps.map((step, i) => {
+          const StepIcon = step.icon;
+          return (
+            <motion.div
+              key={i}
+              whileHover={{ y: -4, scale: 1.02 }}
+              className="glass-card-glow flex items-center gap-4 cursor-default !p-6"
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.12), hsl(var(--accent) / 0.08))" }}
+              >
+                <StepIcon className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold text-primary tracking-wider font-sans">{step.n}</span>
+                <div className="font-bold text-foreground font-display text-[15px]">{step.title}</div>
+                <div className="text-xs text-subtle font-sans">{step.sub}</div>
+              </div>
+              {i < 2 && (
+                <ArrowRight className="w-4 h-4 text-faintest ml-auto hidden sm:block" />
+              )}
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="flex flex-col items-center mt-14"
+      >
+        <span className="text-[11px] font-sans text-faintest tracking-widest uppercase mb-2">Scroll to learn more</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-5 h-5 text-faintest" />
+        </motion.div>
       </motion.div>
     </section>
   );
